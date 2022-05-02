@@ -1,0 +1,15 @@
+name: Linear PR Title
+description: Update your PR's title to the linked Linear story's title
+branding:
+  icon: copy
+  color: yellow
+inputs:
+  linearApiKey:
+    description: Linear API auth token
+    required: true
+  ghToken:
+    description: GitHub API auth name
+    required: true
+runs:
+  using: "node12"
+  main: "dist/index.js"

@@ -1,0 +1,28 @@
+{
+  "name": "linear-pr-title-action",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "repository": "git@github.com:perdoo/linear-pr-title-action.git",
+  "author": "Thomas Pigarelli <thomas@perdoo.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.7.0",
+    "@actions/github": "^5.0.1",
+    "@linear/sdk": "^1.22.0",
+    "@types/lodash": "^4.14.182",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.4.1",
+    "@types/node": "^17.0.30",
+    "jest": "^27.0.3",
+    "prettier": "^2.6.2",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^27.1.4",
+    "typescript": "^4.6.4"
+  },
+  "scripts": {
+    "build": "rimraf dist && tsc",
+    "test": "jest"
+  }
+}
