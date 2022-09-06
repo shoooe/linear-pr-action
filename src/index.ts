@@ -68,7 +68,7 @@ const getTitleFromIssueId = async (
   return title;
 };
 
-const getBodyWithIssues = async (
+export const getBodyWithIssues = async (
   linearClient: LinearClient,
   pullRequest: PullRequest,
   issueIds: string[]
@@ -92,6 +92,13 @@ const getBodyWithIssues = async (
       } else {
         body = `${markdownUrl}\n${body}`;
       }
+    }
+
+    // once we add a link, remove the manual "fixes ENG-123", if any, to avoid duplication.
+    const issueIdRegex = new RegExp(`(fixes|resolves) ${issueId}\n`, "i");
+
+    if (issueIdRegex.test(body)) {
+      body = body.replace(issueIdRegex, "");
     }
 
     previousIssueUrl = issue.url;
