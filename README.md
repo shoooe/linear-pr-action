@@ -17,7 +17,7 @@ _Required._ GitHub API auth token.
 ## Example usage
 
 ```yaml
-uses: perdoo/linear-pr-title-action@main
+uses: shoooe/linear-pr-title-action@main
 with:
   linearApiKey: ${{ secrets.LINEAR_API_KEY }}
   ghToken: ${{ secrets.GITHUB_TOKEN }}
