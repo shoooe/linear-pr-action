@@ -37,6 +37,7 @@ const core = __importStar(require("@actions/core"));
 const github = __importStar(require("@actions/github"));
 const sdk_1 = require("@linear/sdk");
 const lodash_1 = require("lodash");
+const inputs_1 = require("./inputs");
 const PR_TITLE_UPDATE_KEYWORD = "x";
 const getLinearIssueIds = (pullRequest) => {
     var _a;
@@ -62,13 +63,13 @@ exports.getLinearIssueIds = getLinearIssueIds;
  */
 const getConventionalCommitPrefix = (issue) => __awaiter(void 0, void 0, void 0, function* () {
     const labels = yield issue.labels();
-    const isBug = labels.nodes.some(label => /bug/i.test(label.name));
+    const isBug = labels.nodes.some((label) => /bug/i.test(label.name));
     if (isBug)
         return "fix: ";
-    const isChore = labels.nodes.some(label => /chore/i.test(label.name));
+    const isChore = labels.nodes.some((label) => /chore/i.test(label.name));
     if (isChore)
         return "chore: ";
-    const isFeature = labels.nodes.some(label => /feature/i.test(label.name));
+    const isFeature = labels.nodes.some((label) => /feature/i.test(label.name));
     if (isFeature)
         return "feat: ";
     return null;
@@ -150,14 +151,11 @@ const updatePrTitleAndBody = (linearClient, octokit, pullRequest) => __awaiter(v
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const linearApiKey = core.getInput("linearApiKey");
-            const ghToken = core.getInput("ghToken");
-            core.setSecret("linearApiKey");
-            core.setSecret("ghToken");
+            const inputs = (0, inputs_1.getInputs)();
             const linearClient = new sdk_1.LinearClient({
-                apiKey: linearApiKey,
+                apiKey: inputs.linearApiKey,
             });
-            const octokit = github.getOctokit(ghToken);
+            const octokit = github.getOctokit(inputs.githubToken);
             const { number: prNumber, repository } = github.context.payload;
             if ((0, lodash_1.isNil)(repository))
                 return;

@@ -1,6 +1,6 @@
 {
   "name": "linear-pr-title-action",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "main": "dist/index.js",
   "repository": "git@github.com:perdoo/linear-pr-title-action.git",
   "author": "Thomas Pigarelli <thomas@perdoo.com>",

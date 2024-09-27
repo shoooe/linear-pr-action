@@ -2,6 +2,7 @@ import * as core from "@actions/core";
 import * as github from "@actions/github";
 import { Issue, LinearClient } from "@linear/sdk";
 import { isNil } from "lodash";
+import { getInputs } from "./inputs";
 
 const PR_TITLE_UPDATE_KEYWORD = "x";
 
@@ -47,17 +48,17 @@ export const getLinearIssueIds = (pullRequest: PullRequest) => {
 const getConventionalCommitPrefix = async (issue: Issue) => {
   const labels = await issue.labels();
 
-  const isBug = labels.nodes.some(label => /bug/i.test(label.name));
+  const isBug = labels.nodes.some((label) => /bug/i.test(label.name));
   if (isBug) return "fix: ";
-  
-  const isChore = labels.nodes.some(label => /chore/i.test(label.name));
+
+  const isChore = labels.nodes.some((label) => /chore/i.test(label.name));
   if (isChore) return "chore: ";
 
-  const isFeature = labels.nodes.some(label => /feature/i.test(label.name));
+  const isFeature = labels.nodes.some((label) => /feature/i.test(label.name));
   if (isFeature) return "feat: ";
 
   return null;
-}
+};
 
 const getTitleFromIssueId = async (
   linearClient: LinearClient,
@@ -76,8 +77,7 @@ const getTitleFromIssueId = async (
   if (!isNil(parentIssue))
     core.info(`Fetched parent issue ${parentIssue.title}`);
   const project = await issue.project;
-  if (!isNil(project))
-    core.info(`Fetched project ${project.name}`);
+  if (!isNil(project)) core.info(`Fetched project ${project.name}`);
   let prefix = await getConventionalCommitPrefix(issue);
   if (!isNil(parentIssue) && isNil(prefix))
     prefix = await getConventionalCommitPrefix(parentIssue);
@@ -149,7 +149,11 @@ const updatePrTitleAndBody = async (
   }
   core.info(`PR linked to Linear issues: ${issueIds.join(", ")}.`);
 
-  const title = await getTitleFromIssueId(linearClient, pullRequest, issueIds[0]);
+  const title = await getTitleFromIssueId(
+    linearClient,
+    pullRequest,
+    issueIds[0]
+  );
   core.info(`Inferred title: ${title}`);
   const body = await getBodyWithIssues(linearClient, pullRequest, issueIds);
   core.info(`Inferred body: ${body}`);
@@ -166,16 +170,11 @@ const updatePrTitleAndBody = async (
 
 async function run() {
   try {
-    const linearApiKey = core.getInput("linearApiKey");
-    const ghToken = core.getInput("ghToken");
-
-    core.setSecret("linearApiKey");
-    core.setSecret("ghToken");
-
+    const inputs = getInputs();
     const linearClient = new LinearClient({
-      apiKey: linearApiKey,
+      apiKey: inputs.linearApiKey,
     });
-    const octokit = github.getOctokit(ghToken);
+    const octokit = github.getOctokit(inputs.githubToken);
 
     const { number: prNumber, repository } = github.context.payload;
     if (isNil(repository)) return;
