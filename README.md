@@ -6,10 +6,14 @@ To trigger the update, set your PRs title to `x`.
 
 ## Inputs
 
-| Input            | Required | Description             |
-| ---------------- | -------- | ----------------------- |
-| `github-token`   | ✔️       | GitHub API auth token.  |
-| `linear-api-key` | ✔️       | Linear personal API key |
+| Input             | Required | Description                                                   | Default |
+| ----------------- | -------- | ------------------------------------------------------------- | ------- |
+| `github-token`    | ✔️       | GitHub API auth token.                                        |         |
+| `linear-api-key`  | ✔️       | Linear personal API key                                       |         |
+| `placeholder`     |          | The exact title placeholder that should be replaced           | `"x"`   |
+| `include-prefix`  |          | Whether to include a conventional commit prefix (e.g. `fix:`) | `true`  |
+| `include-project` |          | Whether to include the project's name                         | `true`  |
+| `include-parent`  |          | Whether to include the parent's title                         | `true`  |
 
 ## Installation
 
@@ -24,10 +28,6 @@ on:
   pull_request:
     types: [opened, edited]
 
-env:
-  PR_NUMBER: ${{ github.event.number }}
-  GH_TOKEN: ${{ github.token }}
-
 jobs:
   pr:
     runs-on: ubuntu-latest
@@ -36,8 +36,8 @@ jobs:
 
       - uses: shoooe/linear-pr-action@main
         with:
-          linearApiKey: ${{ secrets.LINEAR_API_KEY }}
-          ghToken: ${{ github.token }}
+          linear-api-key: ${{ secrets.LINEAR_API_KEY }}
+          github-token: ${{ github.token }}
 ```
 
 ### 2. Secret

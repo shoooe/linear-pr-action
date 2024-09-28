@@ -1,15 +1,27 @@
 name: Linear PR Title
-description: Update your PR's title to the linked Linear story's title
+description: Update your PR's title to the linked Linear issue's title
 branding:
   icon: copy
   color: yellow
 inputs:
-  linearApiKey:
-    description: Linear API auth token
+  linear-api-key:
+    description: Linear personal API key
     required: true
-  ghToken:
-    description: GitHub API auth name
+  github-token:
+    description: GitHub API auth
     required: true
+  placeholder:
+    description: The exact title placeholder that should be replaced
+    required: false
+  include-prefix:
+    description: Whether to include a conventional commit prefix (e.g. `fix:`)
+    required: false
+  include-project:
+    description: Whether to include the project's name
+    required: false
+  include-parent:
+    description: Whether to include the parent's title
+    required: false
 runs:
-  using: "node12"
+  using: "node20"
   main: "dist/index.js"

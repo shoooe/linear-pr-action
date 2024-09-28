@@ -23,9 +23,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getInputs = void 0;
-const core = __importStar(require("@actions/core"));
+exports.getOptionalInput = exports.getRequiredInput = void 0;
 const lodash_1 = require("lodash");
+const core = __importStar(require("@actions/core"));
 const getRequiredInput = (key) => {
     const inputOrEmptyString = core.getInput(key);
     if ((0, lodash_1.isEmpty)(inputOrEmptyString)) {
@@ -33,20 +33,10 @@ const getRequiredInput = (key) => {
     }
     return inputOrEmptyString;
 };
+exports.getRequiredInput = getRequiredInput;
 const getOptionalInput = (key, defaultValue) => {
     const inputOrEmptyString = core.getInput(key);
     return !(0, lodash_1.isEmpty)(inputOrEmptyString) ? inputOrEmptyString : defaultValue;
 };
-const getInputs = () => {
-    const inputs = {
-        linearApiKey: getRequiredInput("linear-api-key"),
-        githubToken: getRequiredInput("github-token"),
-        placeholder: getOptionalInput("placeholder"),
-    };
-    // Mask these secrets.
-    core.setSecret("linear-api-key");
-    core.setSecret("github-token");
-    return inputs;
-};
-exports.getInputs = getInputs;
+exports.getOptionalInput = getOptionalInput;
 //# sourceMappingURL=inputs.js.map
