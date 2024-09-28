@@ -1,9 +1,9 @@
 {
-  "name": "linear-pr-title-action",
-  "version": "1.0.0",
+  "name": "linear-pr-action",
+  "version": "2.0.0",
   "main": "dist/index.js",
-  "repository": "git@github.com:perdoo/linear-pr-title-action.git",
-  "author": "Thomas Pigarelli <thomas@perdoo.com>",
+  "repository": "git@github.com:shoooe/linear-pr-action.git",
+  "author": "Thomas Pigarelli <tpigarelli@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.7.0",
@@ -19,7 +19,7 @@
     "prettier": "^2.6.2",
     "rimraf": "^3.0.2",
     "ts-jest": "^27.1.4",
-    "typescript": "^4.6.4"
+    "typescript": "^5.6.2"
   },
   "scripts": {
     "build": "rimraf dist && tsc",
